@@ -91,6 +91,10 @@
 				np = this.pc.numPages(),
 				fragment = $("<div class='pagination'></div>");
 			
+			// Generate "First"-Link
+			if(this.opts.first_text && (current_page > 0 || this.opts.first_show_always)){
+				fragment.append(this.createLink(0, current_page, {text:this.opts.first_text, classes:"first",rel:"first"}));
+			}			
 			// Generate "Previous"-Link
 			if(this.opts.prev_text && (current_page > 0 || this.opts.prev_show_always)){
 				fragment.append(this.createLink(current_page-1, current_page, {text:this.opts.prev_text, classes:"prev",rel:"prev"}));
@@ -122,6 +126,10 @@
 			if(this.opts.next_text && (current_page < np-1 || this.opts.next_show_always)){
 				fragment.append(this.createLink(current_page+1, current_page, {text:this.opts.next_text, classes:"next",rel:"next"}));
 			}
+			// Generate "Last"-Link
+			if(this.opts.last_text && (current_page > 0 || this.opts.last_show_always)){
+				fragment.append(this.createLink(this.maxentries, current_page, {text:this.opts.last_text, classes:"last",rel:"last"}));
+			}			
 			$('a', fragment).click(eventHandler);
 			return fragment;
 		}
@@ -137,11 +145,15 @@
 			current_page:0,
 			num_edge_entries:0,
 			link_to:"#",
+			first_text:"First",
 			prev_text:"Prev",
 			next_text:"Next",
+			last_text:"Last",
 			ellipse_text:"...",
+			first_show_always:true,
 			prev_show_always:true,
 			next_show_always:true,
+			last_show_always:true,
 			renderer:"defaultRenderer",
 			show_if_single_page:false,
 			load_first_page:true,
